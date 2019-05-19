@@ -10,16 +10,12 @@ public class Ball {
     protected int y;
     protected int radius;
     protected List<Behaviour> behaviours;
-    private int direction;
-    private int growthDirection;
 
     protected Ball(int x, int y, int radius, int direction) {
         this.x = x;
         this.y = y;
         this.radius = radius;
         this.behaviours = new ArrayList<Behaviour>();
-        this.direction = direction;
-        this.growthDirection = 1;
     }
 
     protected Ball(int x, int y) {
@@ -54,29 +50,13 @@ public class Ball {
         return y;
     }
 
-    public int getDirection() {
-        return direction;
-    }
-
     public void setY(int y) {
         this.y = y;
 
     }
 
-    public void setDirection(int direction){
-        this.direction = direction;
-    }
-
     public int getRadius() {
         return radius;
-    }
-
-    public int getGrowthDirection() {
-        return growthDirection;
-    }
-
-    public void setGrowthDirection(int growthDirection) {
-        this.growthDirection = growthDirection;
     }
 
     public void setRadius(int radius) {

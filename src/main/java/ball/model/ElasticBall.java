@@ -6,9 +6,15 @@ public class ElasticBall implements Behaviour {
     static final int GROW = 1;
     static final int SHRINK = -1;
 
+    private int growthDirection;
+
+    public ElasticBall() {
+        this.growthDirection = GROW;
+    }
+
     @Override
     public void update(Ball ball) {
-        ball.setGrowthDirection(reverseDirectionIfNecessary(ball));
+        growthDirection = reverseDirectionIfNecessary(ball);
         ball.setRadius(next(ball));
     }
 
@@ -24,7 +30,7 @@ public class ElasticBall implements Behaviour {
             return switchDirection(ball);
         }
 
-        return ball.getGrowthDirection();
+        return growthDirection;
     }
 
     private boolean shrinkingTooSmall(Ball ball) {
@@ -41,14 +47,14 @@ public class ElasticBall implements Behaviour {
     }
 
     private int next(Ball ball) {
-        return ball.getRadius() + (GROWTH_RATE * ball.getGrowthDirection());
+        return ball.getRadius() + (GROWTH_RATE * growthDirection);
     }
 
     private boolean shrinking(Ball ball) {
-        return ball.getGrowthDirection() == SHRINK;
+        return growthDirection == SHRINK;
     }
 
     private boolean growing(Ball ball) {
-        return ball.getGrowthDirection() == GROW;
+        return growthDirection == GROW;
     }
 }

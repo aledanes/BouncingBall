@@ -8,9 +8,15 @@ public class BouncingBall implements Behaviour {
     static final int DOWN = 1;
     static final int UP = -1;
 
+    private int direction;
+
+    public BouncingBall() {
+        this.direction = DOWN;
+    }
+
     @Override
     public void update(Ball ball) {
-        ball.setDirection(reverseDirectionIfNecessary(ball));
+        direction = reverseDirectionIfNecessary(ball);
         ball.setY(move(ball));
     }
 
@@ -24,7 +30,7 @@ public class BouncingBall implements Behaviour {
         if (movingTooHigh(ball) || movingTooLow(ball)) {
             return switchDirection(ball);
         }
-        return ball.getDirection();
+        return direction;
     }
 
     private boolean movingTooLow(Ball ball) {
@@ -40,15 +46,15 @@ public class BouncingBall implements Behaviour {
     }
 
     private int move(Ball ball) {
-        return ball.getY() + (MOVEMENT_SPEED * ball.getDirection());
+        return ball.getY() + (MOVEMENT_SPEED * direction);
     }
 
     private boolean movingDown(Ball ball) {
-        return ball.getDirection() == DOWN;
+        return direction == DOWN;
     }
 
     private boolean movingUp(Ball ball) {
 
-        return ball.getDirection() == UP;
+        return direction == UP;
     }
 }
