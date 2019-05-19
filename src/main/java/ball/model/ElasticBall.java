@@ -1,22 +1,15 @@
 package ball.model;
 
-public class ElasticBall extends Ball {
+public class ElasticBall implements Behaviour {
     public static final int GROWTH_RATE = 2;
 
     static final int GROW = 1;
     static final int SHRINK = -1;
 
-    private int growthDirection;
-
-    ElasticBall(int x, int y, int radius, int growthDirection) {
-        super(x, y, radius);
-        this.growthDirection = growthDirection;
-    }
-
     @Override
-    public void update() {
-        growthDirection = reverseGrowthDirectionIfNecessary();
-        radius = next();
+    public void update(Ball ball) {
+        ball.setGrowthDirection(reverseDirectionIfNecessary(ball));
+        ball.setRadius(next(ball));
     }
 
     /***********************************************************************************
@@ -25,35 +18,37 @@ public class ElasticBall extends Ball {
      *
      ***********************************************************************************/
 
-    private int reverseGrowthDirectionIfNecessary() {
-        if (growingTooBig() || shrinkingTooSmall()) {
-            return switchDirection();
+    @Override
+    public int reverseDirectionIfNecessary(Ball ball) {
+        if (growingTooBig(ball) || shrinkingTooSmall(ball)) {
+            return switchDirection(ball);
         }
 
-        return this.growthDirection;
+        return ball.getGrowthDirection();
     }
 
-    private boolean shrinkingTooSmall() {
-        return radius <= 0 && shrinking();
+    private boolean shrinkingTooSmall(Ball ball) {
+        return ball.getRadius() <= 0 && shrinking(ball);
     }
 
-    private boolean growingTooBig() {
-        return radius >= Ball.DEFAULT_RADIUS && growing();
+    private boolean growingTooBig(Ball ball) {
+        return ball.getRadius() >= Ball.DEFAULT_RADIUS && growing(ball);
     }
 
-    private int switchDirection() {
-        return growing() ? SHRINK : GROW;
+    @Override
+    public int switchDirection(Ball ball) {
+        return growing(ball) ? SHRINK : GROW;
     }
 
-    private int next() {
-        return radius + (GROWTH_RATE * growthDirection);
+    private int next(Ball ball) {
+        return ball.getRadius() + (GROWTH_RATE * ball.getGrowthDirection());
     }
 
-    private boolean shrinking() {
-        return growthDirection == SHRINK;
+    private boolean shrinking(Ball ball) {
+        return ball.getGrowthDirection() == SHRINK;
     }
 
-    private boolean growing() {
-        return growthDirection == GROW;
+    private boolean growing(Ball ball) {
+        return ball.getGrowthDirection() == GROW;
     }
 }

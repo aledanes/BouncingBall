@@ -27,6 +27,7 @@ public class BallFactory {
     public static Ball bounceBehaviour(int x, int y) {
         Ball ball = new Ball(x, y);
         ball.addBehaviour(new BouncingBall());
+        ball.addBehaviour(new ElasticBall());
         return ball;
     }
 }
